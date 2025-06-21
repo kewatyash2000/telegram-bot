@@ -59,9 +59,8 @@ async def handler(event):
         message = event.message
         logging.info(f"🟢 Message from source: {event.chat.username} | ID: {message.id}")
 
-        original_text = message.text or message.message or ""
-        if message.caption:
-            original_text = message.caption
+        original_text = getattr(message, 'text', None) or getattr(message, 'message', None) or ""
+
 
         # Rotate to the next converter bot
         converter_bot = CONVERTER_BOTS[bot_index % len(CONVERTER_BOTS)]
